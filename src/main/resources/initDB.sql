@@ -109,6 +109,13 @@ CREATE TABLE customer_project (
 
 alter table customer_project owner to postgres;
 
---ALTER projects due to tasks
+--ALTER projects due to task2
+alter table developers add column salary int;
+
+alter table projects add column cost int;
+
+--ALTER projects due to task with JDBC
 ALTER TABLE projects add column project_start DATE;
+
+
 

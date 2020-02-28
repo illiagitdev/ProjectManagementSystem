@@ -79,6 +79,21 @@ INSERT INTO customer_project (customer_id, project_id) VALUES (3, 4);
 INSERT INTO customer_project (customer_id, project_id) VALUES (4, 3);
 INSERT INTO customer_project (customer_id, project_id) VALUES (4, 4);
 
+--update due to interaction by task 2
+update developers set salary = 1600 where id = 1;
+update developers set salary = 1800 where id = 2;
+update developers set salary = 1100 where id = 3;
+update developers set salary = 2700 where id = 4;
+update developers set salary = 2900 where id = 5;
+update developers set salary = 1400 where id = 6;
+update developers set salary = 3200 where id = 7;
+
+update projects set cost = 40 where id =1;
+update projects set cost = 258 where id =2;
+update projects set cost = 237 where id =3;
+update projects set cost = 547 where id =4;
+update projects set cost = 112 where id =5;
+
 --update
 UPDATE projects SET project_start = '2018-08-07' WHERE id = 1;
 UPDATE projects SET project_start = '2017-01-11' WHERE id = 2;
