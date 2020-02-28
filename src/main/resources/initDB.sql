@@ -108,3 +108,7 @@ CREATE TABLE customer_project (
 );
 
 alter table customer_project owner to postgres;
+
+--ALTER projects due to tasks
+ALTER TABLE projects add column project_start DATE;
+

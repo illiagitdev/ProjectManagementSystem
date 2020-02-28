@@ -78,3 +78,10 @@ INSERT INTO customer_project (customer_id, project_id) VALUES (3, 2);
 INSERT INTO customer_project (customer_id, project_id) VALUES (3, 4);
 INSERT INTO customer_project (customer_id, project_id) VALUES (4, 3);
 INSERT INTO customer_project (customer_id, project_id) VALUES (4, 4);
+
+--update
+UPDATE projects SET project_start = '2018-08-07' WHERE id = 1;
+UPDATE projects SET project_start = '2017-01-11' WHERE id = 2;
+UPDATE projects SET project_start = '2019-03-27' WHERE id = 3;
+UPDATE projects SET project_start = '2019-09-05' WHERE id = 4;
+UPDATE projects SET project_start = '2018-11-07' WHERE id = 5;
