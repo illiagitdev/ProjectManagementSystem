@@ -6,7 +6,7 @@ import com.homework.goit.common.View;
 
 public class CompanyService {
     private View view;
-    DataAccessObject<Company> companyDAO;
+    private DataAccessObject<Company> companyDAO;
 
     public CompanyService(View view) {
     this.view = view;
