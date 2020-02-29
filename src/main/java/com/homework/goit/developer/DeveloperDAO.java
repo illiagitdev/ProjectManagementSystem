@@ -23,6 +23,13 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
             "JOIN skills s on ds.skill_id = s.id " +
             "WHERE s.level = ? " +
             "GROUP BY dev.id, s.skill;";
+    private final String DEVELOPERS_IN_PROJECT = "SELECT pr.name, dev.* FROM developers dev " +
+            "JOIN  developer_projects dev_p ON dev.id = dev_p.developer_id " +
+            "JOIN projects pr ON pr.id = dev_p.project_id " +
+            "WHERE pr.id = ? " +
+            "GROUP BY pr.name, dev.id " +
+            "ORDER BY pr.name;";
+
 
     public DeveloperDAO(Connection connection) {
         super(connection);
@@ -97,15 +104,9 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
 
     @Override
     public List<Developer> getAll() {
-        List<Developer> developers = null;
+        List<Developer> developers = new LinkedList<>();
         try (PreparedStatement statement = connection.prepareStatement(RETRiVE_ALL)){
             ResultSet rs = statement.executeQuery();
-            int length = 0;
-            if(rs.last()){
-                length = rs.getRow();
-                rs.beforeFirst();
-            }
-            developers = new ArrayList<>(length);
             Developer developer;
             while (rs.next()){
                 developer = new Developer();
@@ -192,5 +193,34 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
             e.printStackTrace();
         }
         return developers;
+    }
+
+    @Override
+    public Map<String, Developer> getDevelopersInProject(int id) {
+        Map<String, Developer> developers = new LinkedHashMap<>();;
+        try (PreparedStatement statement = connection.prepareStatement(DEVELOPERS_IN_PROJECT)){
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            Developer developer;
+            String project;
+            int n = 1;
+            while (rs.next()){
+                developer = new Developer();
+                project = rs.getString(1);
+                developer.setId(rs.getInt(2));
+                developer.setFirstName(rs.getString(3));
+                developer.setLastName(rs.getString(4));
+                developer.setAge(rs.getInt(5));
+                developer.setEmail(rs.getString(6));
+                developer.setSex(rs.getString(7));
+                developer.setHireDate(rs.getDate(8));
+                developer.setCompanyId(rs.getInt(9));
+                developer.setSalary(rs.getInt(10));
+                developers.put(String.format("%s (%d) ", project , n++), developer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  developers;
     }
 }

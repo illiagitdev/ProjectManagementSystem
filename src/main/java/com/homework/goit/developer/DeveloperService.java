@@ -72,6 +72,17 @@ public class DeveloperService {
         }
     }
 
+    public void showProjectDevelopers() {
+        view.write("Enter project id to see it's developers");
+        int id =validateNumber(view.read());
+        Map<String, Developer> projectDevelopers = developerDAOExtended.getDevelopersInProject(id);
+        Iterator<Map.Entry<String, Developer>> iter = projectDevelopers.entrySet().iterator();
+        while (iter.hasNext()){
+            Map.Entry<String, Developer> entry = iter.next();
+            view.write(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+
     private Date validateDate(String read) {
         Date date = null;
         try {
