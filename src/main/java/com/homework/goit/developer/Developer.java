@@ -56,8 +56,8 @@ public class Developer extends Entity {
             this.sex = Sex.MALE;
         }else if (sex.equals(Sex.FEMALE.getSex())){
             this.sex =  Sex.FEMALE;
-        }else {
-            throw new IllegalArgumentException("Unexpected value");
+        } else {
+            this.sex = null;
         }
     }
 
@@ -88,7 +88,8 @@ public class Developer extends Entity {
     @Override
     public String toString() {
         return "Developer{" +
-                "firstName='" + firstName + '\'' +
+                super.toString() + ' ' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +

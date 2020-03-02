@@ -45,7 +45,8 @@ public class Project extends Entity {
     @Override
     public String toString() {
         return "Project{" +
-                "name='" + name + '\'' +
+                super.toString() + ' ' +
+                ", name='" + name + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", cost=" + cost +
                 ", projectStart=" + projectStart +

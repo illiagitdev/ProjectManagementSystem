@@ -25,7 +25,8 @@ public class Customer extends Entity {
     @Override
     public String toString() {
         return "Customer{" +
-                "name='" + name + '\'' +
+                super.toString() + ' ' +
+                ", name='" + name + '\'' +
                 ", budget=" + budget +
                 '}';
     }

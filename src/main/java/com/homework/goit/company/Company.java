@@ -25,7 +25,8 @@ public class Company extends Entity {
     @Override
     public String toString() {
         return "Company{" +
-                "name='" + name + '\'' +
+                super.toString() + ' ' +
+                ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 '}';
     }
