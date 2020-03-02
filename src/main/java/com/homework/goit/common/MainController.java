@@ -287,12 +287,12 @@ public class MainController {
     private void availableCommands() {
         String allCommands = "Available commands:" +
                 "\n\t--help" +
-                "\n\t--add_developer" +
+                "\n\t--add_developer" +//todo: fix
                 "\n\t--add_project" +
                 "\n\t--add_company" +
                 "\n\t--add_customer" +
 
-                "\n\t--update_developer" +
+                "\n\t--update_developer" +//todo: fix
                 "\n\t--update_project" +
                 "\n\t--update_company" +
                 "\n\t--update_customer" +
@@ -302,7 +302,7 @@ public class MainController {
                 "\n\t--get_by_id_company" +
                 "\n\t--get_by_id_customer" +
 
-                "\n\t--get_all_developer" +
+                "\n\t--get_all_developer" +//todo: fix
                 "\n\t--get_all_project" +
                 "\n\t--get_all_company" +
                 "\n\t--get_all_customer" +
