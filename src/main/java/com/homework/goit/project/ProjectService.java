@@ -86,7 +86,7 @@ public class ProjectService {
         projectDAO.delete(id);
     }
 
-    public void showSalaryProject() {
+    public void showSalaryProject() {//todo: add check for ID, if it <0 & if id > size
         view.write("Enter project id to see total salary");
         int id = validateNumber(view.read());
         view.write("Project id(" + id + "):");

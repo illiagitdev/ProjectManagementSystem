@@ -21,4 +21,12 @@ public class Customer extends Entity {
     public void setBudget(int budget) {
         this.budget = budget;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "name='" + name + '\'' +
+                ", budget=" + budget +
+                '}';
+    }
 }

@@ -128,7 +128,7 @@ public class DeveloperService {
         }
     }
 
-    public void showProjectDevelopers() {
+    public void showProjectDevelopers() {//todo: if -n, 0 or >size it exit without message
         view.write("Enter project id to see it's developers");
         int id =validateNumber(view.read());
         Map<String, Developer> projectDevelopers = developerDAOExtended.getDevelopersInProject(id);

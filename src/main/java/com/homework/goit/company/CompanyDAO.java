@@ -27,12 +27,10 @@ public class CompanyDAO extends DataAccessObject<Company> {
             statement.setString(2, company.getLocation());
             statement.execute();
         } catch (SQLException e) {
-            while (e != null) {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
                 e.getNextException();
-            }
         }
     }
 
@@ -47,12 +45,10 @@ public class CompanyDAO extends DataAccessObject<Company> {
                 throw new RuntimeException("No company with id = " + company.getId());
             }
         } catch (SQLException e) {
-            while (e != null) {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
                 e.getNextException();
-            }
         }
     }
 
@@ -75,12 +71,10 @@ public class CompanyDAO extends DataAccessObject<Company> {
                 company.setName(rs.getString(2));
                 company.setLocation(rs.getString(3));
         } catch (SQLException e) {
-            while (e != null) {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
                 e.getNextException();
-            }
         }
         return company;
     }
@@ -99,12 +93,10 @@ public class CompanyDAO extends DataAccessObject<Company> {
                 companyList.add(company);
             }
          } catch (SQLException e) {
-            while (e != null) {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
                 e.getNextException();
-            }
         }
         return companyList;
     }
@@ -118,12 +110,10 @@ public class CompanyDAO extends DataAccessObject<Company> {
                 throw new RuntimeException("Company with id = " + id + " were not found!");
             }
         } catch (SQLException e) {
-            while (e != null) {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
                 e.getNextException();
-            }
         }
     }
 }
