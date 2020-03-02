@@ -30,7 +30,6 @@ public class CustomerDAO extends DataAccessObject<Customer> {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
     }
 
@@ -42,13 +41,12 @@ public class CustomerDAO extends DataAccessObject<Customer> {
             statement.setInt(3, customer.getId());
             int rows = statement.executeUpdate();
             if(rows == 0){
-                throw new RuntimeException("No company with id = " + customer.getId());
+                throw new RuntimeException("No customer with id = " + customer.getId());
             }
         } catch (SQLException e) {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
     }
 
@@ -58,23 +56,16 @@ public class CustomerDAO extends DataAccessObject<Customer> {
         try (PreparedStatement statement = connection.prepareStatement(RETRIVE_BY_ID)){
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            int length = 0;
-            if(rs.last()){
-                length = rs.getRow();
-                rs.first();
-            }
-            if(length == 0){
-                throw new RuntimeException("Customer not found! No such id!");
-            }
+            rs.next();
+            int newId = rs.getInt(1);
             customer = new Customer();
-            customer.setId(rs.getInt(1));
+            customer.setId(newId);
             customer.setName(rs.getString(2));
             customer.setBudget(rs.getInt(3));
         } catch (SQLException e) {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
         return customer;
     }
@@ -96,7 +87,6 @@ public class CustomerDAO extends DataAccessObject<Customer> {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
         return customerList;
     }
@@ -113,7 +103,6 @@ public class CustomerDAO extends DataAccessObject<Customer> {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
     }
 }

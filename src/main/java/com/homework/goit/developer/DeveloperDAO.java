@@ -51,7 +51,6 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
     }
 
@@ -75,7 +74,6 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
     }
 
@@ -85,16 +83,10 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
         try (PreparedStatement statement = connection.prepareStatement(RETRIVE_BY_ID)){
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            int length = 0;
-            if(rs.last()){
-                length = rs.getRow();
-                rs.first();
-            }
-            if(length == 0){
-                throw new RuntimeException("Developer not found! No such id!");
-            }
+            rs.next();
+            int newId = rs.getInt(1);
             developer = new Developer();
-            developer.setId(rs.getInt(1));
+            developer.setId(newId);
             developer.setFirstName(rs.getString(2));
             developer.setLastName(rs.getString(3));
             developer.setAge(rs.getInt(4));
@@ -107,7 +99,6 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
         return developer;
     }
@@ -152,7 +143,6 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
     }
 
@@ -180,7 +170,6 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
         return developers;
     }
@@ -212,7 +201,6 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
         return developers;
     }
@@ -244,7 +232,6 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("Message: " + e.getMessage());
                 System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
         }
         return  developers;
     }

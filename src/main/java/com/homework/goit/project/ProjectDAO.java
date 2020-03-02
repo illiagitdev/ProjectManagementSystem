@@ -17,7 +17,7 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
     private final String RETRiVE_ALL = "SELECT * FROM projects;";
     private final String DELETE = "DELETE FROM projects WHERE id = ?;";
 
-    private final String PROJECT_BY_SALARY ="SELECT pr.name, sum(dev.salary) FROM developers dev " +
+    private final String PROJECT_BY_SALARY = "SELECT pr.name, sum(dev.salary) FROM developers dev " +
             "JOIN  developer_projects dev_p ON dev.id = dev_p.developer_id " +
             "JOIN projects pr ON pr.id = dev_p.project_id " +
             "WHERE pr.id = ?  GROUP BY pr.name;";
@@ -32,23 +32,22 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
 
     @Override
     public void create(Project project) {
-        try (PreparedStatement statement = connection.prepareStatement(INSERT)){
+        try (PreparedStatement statement = connection.prepareStatement(INSERT)) {
             statement.setString(1, project.getName());
             statement.setDate(2, project.getReleaseDate());
             statement.setInt(3, project.getCost());
             statement.setDate(4, project.getProjectStart());
             statement.execute();
         } catch (SQLException e) {
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("Message: " + e.getMessage());
-                System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Vendor: " + e.getErrorCode());
         }
     }
 
     @Override
     public void update(Project project) {
-        try (PreparedStatement statement = connection.prepareStatement(UPDATE)){
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE)) {
             statement.setString(1, project.getName());
             statement.setDate(2, project.getReleaseDate());
             statement.setInt(3, project.getCost());
@@ -56,42 +55,34 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
             statement.setInt(5, project.getId());
             statement.execute();
             int rows = statement.executeUpdate();
-            if(rows == 0){
+            if (rows == 0) {
                 throw new RuntimeException("No project with id = " + project.getId());
             }
         } catch (SQLException e) {
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("Message: " + e.getMessage());
-                System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Vendor: " + e.getErrorCode());
         }
     }
 
     @Override
     public Project getById(int id) {
         Project project = null;
-        try (PreparedStatement statement = connection.prepareStatement(RETRIVE_BY_ID)){
+        try (PreparedStatement statement = connection.prepareStatement(RETRIVE_BY_ID)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            int length = 0;
-            if(rs.last()){
-                length = rs.getRow();
-                rs.first();
-            }
-            if(length == 0){
-                throw new RuntimeException("Developer not found! No such id!");
-            }
+            rs.next();
+            int newId = rs.getInt(1);
             project = new Project();
-            project.setId(rs.getInt(1));
+            project.setId(newId);
             project.setName(rs.getString(2));
             project.setReleaseDate(rs.getDate(3));
             project.setCost(rs.getInt(4));
             project.setProjectStart(rs.getDate(5));
         } catch (SQLException e) {
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("Message: " + e.getMessage());
-                System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Vendor: " + e.getErrorCode());
         }
         return project;
     }
@@ -99,10 +90,10 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
     @Override
     public List<Project> getAll() {
         List<Project> projects = new LinkedList<>();
-        try (PreparedStatement statement = connection.prepareStatement(RETRiVE_ALL)){
+        try (PreparedStatement statement = connection.prepareStatement(RETRiVE_ALL)) {
             ResultSet rs = statement.executeQuery();
             Project project;
-            while (rs.next()){
+            while (rs.next()) {
                 project = new Project();
                 project.setId(rs.getInt(1));
                 project.setName(rs.getString(2));
@@ -112,34 +103,32 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
                 projects.add(project);
             }
         } catch (SQLException e) {
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("Message: " + e.getMessage());
-                System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Vendor: " + e.getErrorCode());
         }
         return projects;
     }
 
     @Override
     public void delete(int id) {
-        try (PreparedStatement statement = connection.prepareStatement(DELETE)){
+        try (PreparedStatement statement = connection.prepareStatement(DELETE)) {
             statement.setInt(1, id);
             int rows = statement.executeUpdate();
-            if(rows == 0){
+            if (rows == 0) {
                 throw new RuntimeException("Project with id = " + id + " not found!");
             }
         } catch (SQLException e) {
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("Message: " + e.getMessage());
-                System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Vendor: " + e.getErrorCode());
         }
     }
 
     @Override
     public Map<String, Integer> getSalaryByProject(int id) {
         Map<String, Integer> result = new HashMap<>();
-        try (PreparedStatement statement = connection.prepareStatement(PROJECT_BY_SALARY)){
+        try (PreparedStatement statement = connection.prepareStatement(PROJECT_BY_SALARY)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -148,10 +137,9 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
                 result.put(key, value);
             }
         } catch (SQLException e) {
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("Message: " + e.getMessage());
-                System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Vendor: " + e.getErrorCode());
         }
         return result;
     }
@@ -160,7 +148,7 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
     public Map<Date, Map<String, Integer>> getProjects() {
         Map<Date, Map<String, Integer>> result1 = new HashMap<>();
         Map<String, Integer> result2;
-        try (PreparedStatement statement = connection.prepareStatement(GET_PROJECTS)){
+        try (PreparedStatement statement = connection.prepareStatement(GET_PROJECTS)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Date date = rs.getDate(1);
@@ -171,10 +159,9 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
                 result1.put(date, result2);
             }
         } catch (SQLException e) {
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("Message: " + e.getMessage());
-                System.out.println("Vendor: " + e.getErrorCode());
-                e.getNextException();
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Vendor: " + e.getErrorCode());
         }
         return result1;
     }
