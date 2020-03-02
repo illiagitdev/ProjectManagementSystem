@@ -22,8 +22,9 @@ public class MainController {
                     break;
                 }
                 case "add_developer":{
-                    view.write("Add developer!");
-                    createDeveloper();
+//                    view.write("Add developer!");
+//                    createDeveloper();
+                    view.write("Temporarily unavailable");
                     break;
                 }
                 case "add_project":{
@@ -43,8 +44,9 @@ public class MainController {
                 }
 
                 case "update_developer":{
-                    view.write("Update developer!");
-                    updateDeveloper();
+//                    view.write("Update developer!");
+//                    updateDeveloper();
+                    view.write("Temporarily unavailable");
                     break;
                 }
                 case "update_project":{
@@ -85,8 +87,9 @@ public class MainController {
                 }
 
                 case "get_all_developer":{
-                    view.write("Get all developer!");
-                    getAllDeveloper();
+//                    view.write("Get all developer!");
+//                    getAllDeveloper();
+                    view.write("Temporarily unavailable");
                     break;
                 }
                 case "get_all_project":{
@@ -287,12 +290,12 @@ public class MainController {
     private void availableCommands() {
         String allCommands = "Available commands:" +
                 "\n\t--help" +
-                "\n\t--add_developer" +//todo: fix
+                "\n\t--add_developer" +
                 "\n\t--add_project" +
                 "\n\t--add_company" +
                 "\n\t--add_customer" +
 
-                "\n\t--update_developer" +//todo: fix
+                "\n\t--update_developer" +
                 "\n\t--update_project" +
                 "\n\t--update_company" +
                 "\n\t--update_customer" +
@@ -302,7 +305,7 @@ public class MainController {
                 "\n\t--get_by_id_company" +
                 "\n\t--get_by_id_customer" +
 
-                "\n\t--get_all_developer" +//todo: fix
+                "\n\t--get_all_developer" +
                 "\n\t--get_all_project" +
                 "\n\t--get_all_company" +
                 "\n\t--get_all_customer" +
