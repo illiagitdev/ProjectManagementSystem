@@ -40,7 +40,11 @@ public class CompanyService {
         company.setName(name);
         company.setLocation(location);
         view.write("Updating company...");
-        companyDAO.update(company);
+        try {
+            companyDAO.update(company);
+        } catch (RuntimeException e){
+            view.write(e.getMessage());
+        }
     }
 
     public void getById(){
@@ -48,7 +52,11 @@ public class CompanyService {
         int id = validateNumber(view.read());
         view.write("Searching company...");
         Company company = companyDAO.getById(id);
-        view.write(company.toString());
+        if (company != null) {
+            view.write(company.toString());
+        } else {
+            view.write("Company with such id were not found!");
+        }
     }
 
     public void getAll(){
@@ -63,7 +71,11 @@ public class CompanyService {
         view.write("Enter company id for deleting");
         int id = validateNumber(view.read());
         view.write("Deleting companies...");
-        companyDAO.delete(id);
+        try {
+            companyDAO.delete(id);
+        } catch (RuntimeException e){
+            view.write(e.getMessage());
+        }
     }
 
     private int validateNumber(String value) {

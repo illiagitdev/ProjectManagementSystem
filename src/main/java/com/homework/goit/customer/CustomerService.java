@@ -40,7 +40,11 @@ public class CustomerService {
         customer.setName(name);
         customer.setBudget(budget);
         view.write("Updating customer...");
-        customerDAO.update(customer);
+        try {
+            customerDAO.update(customer);
+        }catch (RuntimeException e){
+            view.write(e.getMessage());
+        }
     }
 
     public void getById(){
@@ -48,7 +52,11 @@ public class CustomerService {
         int id = validateNumber(view.read());
         view.write("Searching customer...");
         Customer customer = customerDAO.getById(id);
-        view.write(customer.toString());
+        if (customer != null) {
+            view.write(customer.toString());
+        } else {
+            view.write("Customer with such id were not found!");
+        }
     }
 
     public void getAll(){
@@ -63,7 +71,11 @@ public class CustomerService {
         view.write("Enter customer id to delete");
         int id = validateNumber(view.read());
         view.write("Deleting customer...");
-        customerDAO.delete(id);
+        try {
+            customerDAO.delete(id);
+        } catch (RuntimeException e){
+            view.write(e.getMessage());
+        }
     }
 
     private int validateNumber(String value) {
@@ -75,7 +87,7 @@ public class CustomerService {
         try {
             result = Integer.parseInt(value);
         } catch (NumberFormatException e){
-            view.write("Not a number! Try again.");
+            view.write("Not a number!");
         }
         return result;
     }

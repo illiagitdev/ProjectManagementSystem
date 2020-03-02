@@ -84,7 +84,11 @@ public class DeveloperService {
         developer.setCompanyId(companyId);
         developer.setSalary(salary);
         view.write("Updating developer...");
-        developerDAO.update(developer);
+        try {
+            developerDAO.update(developer);
+        } catch (RuntimeException e){
+            view.write(e.getMessage());
+        }
     }
 
     public void getById(){
@@ -92,7 +96,11 @@ public class DeveloperService {
         int id = validateNumber(view.read());
         view.write("Searching for developer...");
         Developer developer = developerDAO.getById(id);
-        view.write(developer.toString());
+        if (developer != null) {
+            view.write(developer.toString());
+        } else {
+            view.write("Developer with such id were not found!");
+        }
     }
 
     public void getAll(){
@@ -107,7 +115,11 @@ public class DeveloperService {
         view.write("Enter id developer to delete");
         int id = validateNumber(view.read());
         view.write("Deleting developer...");
-        developerDAO.delete(id);
+        try {
+            developerDAO.delete(id);
+        } catch (RuntimeException e){
+            view.write(e.getMessage());
+        }
     }
 
     public void showJavaDevelopers() {
@@ -160,7 +172,7 @@ public class DeveloperService {
         try {
             result = Integer.parseInt(value);
         } catch (NumberFormatException e){
-            view.write("Not a number! Try again.");
+            view.write("Not a number!");
         }
         return result;
     }

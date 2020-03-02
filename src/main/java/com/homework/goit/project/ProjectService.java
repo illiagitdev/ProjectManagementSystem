@@ -32,7 +32,7 @@ public class ProjectService {
         view.write("Enter project cost");
         int cost = validateNumber(view.read());
         view.write("Enter project start date (format YYYY-MM-DD)");
-        Date startDate = validateDate(view.read());
+        Date startDate = validateDate(view.read());//todo: doesn't work properly
         Project project = new Project();
         project.setName(name);
         project.setReleaseDate(releaseDate);
@@ -60,7 +60,11 @@ public class ProjectService {
         project.setCost(cost);
         project.setProjectStart(startDate);
         view.write("Updating project...");
-        projectDAO.update(project);
+        try {
+            projectDAO.update(project);
+        } catch (RuntimeException e){
+            view.write(e.getMessage());
+        }
     }
 
     public void getById(){
@@ -68,7 +72,11 @@ public class ProjectService {
         int id = validateNumber(view.read());
         view.write("Searching project...");
         Project project = projectDAO.getById(id);
-        view.write(project.toString());
+        if(project != null){
+            view.write(project.toString());
+        }else {
+            view.write("Project with such id were not found!");
+        }
     }
 
     public void getAll(){
@@ -83,7 +91,11 @@ public class ProjectService {
         view.write("Enter project id to delete");
         int id = validateNumber(view.read());
         view.write("Deleting project...");
-        projectDAO.delete(id);
+        try {
+            projectDAO.delete(id);
+        } catch (RuntimeException e){
+            view.write(e.getMessage());
+        }
     }
 
     public void showSalaryProject() {//todo: add check for ID, if it <0 & if id > size
@@ -126,7 +138,7 @@ public class ProjectService {
         try {
             result = Integer.parseInt(value);
         } catch (NumberFormatException e){
-            view.write("Not a number! Try again.");
+            view.write("Not a number!");
         }
         return result;
     }
