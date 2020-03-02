@@ -9,7 +9,7 @@ public class Developer extends Entity {
     private String lastName;
     private int age;
     private String email;
-    private String sex;//todo: as enum
+    private Sex sex;
     private Date hireDate;
     private int companyId;
     private int salary;
@@ -47,11 +47,18 @@ public class Developer extends Entity {
     }
 
     public String getSex() {
-        return sex;
+        return sex.getSex();
     }
 
     public void setSex(String sex) {
-        this.sex = sex;
+        sex = sex.toLowerCase();
+        if (sex.equals(Sex.MALE.getSex())){
+            this.sex = Sex.MALE;
+        }else if (sex.equals(Sex.FEMALE.getSex())){
+            this.sex =  Sex.FEMALE;
+        }else {
+            throw new IllegalArgumentException("Unexpected value");
+        }
     }
 
     public Date getHireDate() {
@@ -85,7 +92,7 @@ public class Developer extends Entity {
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
-                ", sex='" + sex + '\'' +
+                ", sex='" + sex.getSex() + '\'' +
                 ", hireDate='" + hireDate.toString() + '\'' +
                 ", companyId=" + companyId +
                 ", salary=" + salary +

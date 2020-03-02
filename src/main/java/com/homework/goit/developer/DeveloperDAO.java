@@ -48,7 +48,12 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
             statement.setInt(8, developer.getSalary());
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 
@@ -63,13 +68,18 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
             statement.setDate(6, developer.getHireDate());
             statement.setInt(7, developer.getCompanyId());
             statement.setInt(8, developer.getSalary());
-            statement.execute();
+            statement.setInt(9, developer.getId());
             int rows = statement.executeUpdate();
             if(rows == 0){
                 throw new RuntimeException("No developer with id = " + developer.getId());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 
@@ -77,6 +87,7 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
     public Developer getById(int id) {
         Developer developer = null;
         try (PreparedStatement statement = connection.prepareStatement(RETRIVE_BY_ID)){
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             int length = 0;
             if(rs.last()){
@@ -97,7 +108,12 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
             developer.setCompanyId(rs.getInt(8));
             developer.setSalary(rs.getInt(9));
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return developer;
     }
@@ -122,7 +138,12 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 developers.add(developer);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return developers;
     }
@@ -136,7 +157,12 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 throw new RuntimeException("Developer with id = " + id + " not found!");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 
@@ -161,7 +187,12 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 developers.add(developer);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return developers;
     }
@@ -190,7 +221,12 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 developers.put(String.format("%s (%d) ", skill , n++), developer);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return developers;
     }
@@ -219,7 +255,12 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
                 developers.put(String.format("%s (%d) ", project , n++), developer);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return  developers;
     }

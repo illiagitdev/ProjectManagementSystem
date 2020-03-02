@@ -16,7 +16,7 @@ public class MainController {
         view.write("Welcome to Project Management System!\n(Enter 'help' to list available commands!)");
         while (true){
             String actions = view.read();
-            switch (actions){
+            switch (actions){//todo:add all commands and try them all
                 case "help":{
                     availableCommands();
                     break;

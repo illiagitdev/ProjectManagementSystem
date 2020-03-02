@@ -27,7 +27,12 @@ public class CompanyDAO extends DataAccessObject<Company> {
             statement.setString(2, company.getLocation());
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 
@@ -42,7 +47,12 @@ public class CompanyDAO extends DataAccessObject<Company> {
                 throw new RuntimeException("No company with id = " + company.getId());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 
@@ -50,6 +60,7 @@ public class CompanyDAO extends DataAccessObject<Company> {
     public Company getById(int id) {
         Company company = null;
         try (PreparedStatement statement = connection.prepareStatement(RETRIVE_BY_ID)){
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             int length = 0;
             if(rs.last()){
@@ -57,14 +68,19 @@ public class CompanyDAO extends DataAccessObject<Company> {
                 rs.first();
             }
             if(length == 0){
-                throw new RuntimeException("Company not found! No such id!");
+                throw new RuntimeException("Company such id were not found!");
             }
             company = new Company();
                 company.setId(rs.getInt(1));
                 company.setName(rs.getString(2));
                 company.setLocation(rs.getString(3));
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return company;
     }
@@ -83,7 +99,12 @@ public class CompanyDAO extends DataAccessObject<Company> {
                 companyList.add(company);
             }
          } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return companyList;
     }
@@ -94,10 +115,15 @@ public class CompanyDAO extends DataAccessObject<Company> {
             statement.setInt(1, id);
             int rows = statement.executeUpdate();
             if(rows == 0){
-                throw new RuntimeException("Company with id = " + id + " not found!");
+                throw new RuntimeException("Company with id = " + id + " were not found!");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 }

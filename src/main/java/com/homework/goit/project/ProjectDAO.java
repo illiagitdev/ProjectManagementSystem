@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOExtended<Developer> {
+public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOExtended {
     private final String INSERT = "INSERT INTO projects(name, release_date, cost, project_start) VALUES(?, ?, ?, ?);";
     private final String UPDATE = "UPDATE projects SET name = ?, release_date = ?, cost = ?, project_start = ? " +
             "WHERE id = ?;";
@@ -40,7 +40,12 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
             statement.setDate(4, project.getProjectStart());
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 
@@ -57,7 +62,12 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
                 throw new RuntimeException("No project with id = " + project.getId());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 
@@ -65,6 +75,7 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
     public Project getById(int id) {
         Project project = null;
         try (PreparedStatement statement = connection.prepareStatement(RETRIVE_BY_ID)){
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             int length = 0;
             if(rs.last()){
@@ -81,7 +92,12 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
             project.setCost(rs.getInt(4));
             project.setProjectStart(rs.getDate(5));
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return project;
     }
@@ -102,7 +118,12 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
                 projects.add(project);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return projects;
     }
@@ -116,7 +137,12 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
                 throw new RuntimeException("Project with id = " + id + " not found!");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 
@@ -131,7 +157,12 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
             int value = rs.getInt(2);
             result.put(key, value);
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return result;
     }
@@ -151,7 +182,12 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
                 result1.put(date, result2);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return result1;
     }

@@ -4,6 +4,8 @@ import com.homework.goit.common.DataAccessObject;
 import com.homework.goit.common.DatabaseConnector;
 import com.homework.goit.common.View;
 
+import java.util.List;
+
 public class CompanyService {
     private View view;
     private DataAccessObject<Company> companyDAO;
@@ -22,8 +24,56 @@ public class CompanyService {
         Company company = new Company();
         company.setName(name);
         company.setLocation(location);
+        view.write("Creating company...");
         companyDAO.create(company);
-        view.write("company created!");
+    }
+
+    public void updateCompany(){
+        view.write("Enter company id for update");
+        int id = validateNumber(view.read());
+        view.write("Enter new company name");
+        String name = validate(view.read());
+        view.write("Enter new company location");
+        String location = view.read();
+        Company company = new Company();
+        company.setId(id);
+        company.setName(name);
+        company.setLocation(location);
+        view.write("Updating company...");
+        companyDAO.update(company);
+    }
+
+    public Company getById(){
+        view.write("Enter company id");
+        int id = validateNumber(view.read());
+        view.write("Searching company...");
+        return companyDAO.getById(id);
+    }
+
+    public List<Company> getAll(){
+        view.write("Retrieving companies...");
+        return companyDAO.getAll();
+    }
+
+    public void delete(){
+        view.write("Enter company id for deleting");
+        int id = validateNumber(view.read());
+        view.write("Deleting companies...");
+        companyDAO.delete(id);
+    }
+
+    private int validateNumber(String value) {
+        int result = 0;
+        while  (value.trim().isEmpty()){
+            view.write("Field can't be empty");
+            value = view.read();
+        }
+        try {
+            result = Integer.parseInt(value);
+        } catch (NumberFormatException e){
+            view.write("Not a number! Try again.");
+        }
+        return result;
     }
 
     private String validate(String read) {

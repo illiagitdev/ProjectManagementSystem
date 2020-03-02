@@ -24,14 +24,6 @@ public class DeveloperService {
         developerDAOExtended = (DeveloperDAO) developerDAO;
     }
 
-    public void showJavaDevelopers() {
-        view.write("Java developers:");
-        List<Developer> developers = developerDAOExtended.getJavaDeveloper();
-        for (Developer d: developers) {
-            view.write(d.toString());
-        }
-    }
-
     public void createDeveloper() {
         view.write("Enter developer first name");
         String firstName = validate(view.read());
@@ -41,7 +33,7 @@ public class DeveloperService {
         int age = validateNumber(view.read());
         view.write("Enter developer email");
         String email = validate(view.read());
-        view.write("Enter developer sex");
+        view.write("Enter developer sex(male, female)");
         String sex = validate(view.read());
         view.write("Enter developer hire date (format YYYY-MM-DD)");
         Date hireDate = validateDate(view.read());
@@ -58,8 +50,68 @@ public class DeveloperService {
         developer.setHireDate(hireDate);
         developer.setCompanyId(companyId);
         developer.setSalary(salary);
+        view.write("Creating developer...");
         developerDAO.create(developer);
-        view.write("developer created!");
+    }
+
+    public void update(){
+        view.write("Enter id developer for update");
+        int id = validateNumber(view.read());
+        view.write("Enter developer new first name");
+        String firstName = validate(view.read());
+        view.write("Enter developer new last name");
+        String lastName = validate(view.read());
+        view.write("Enter developer new age");
+        int age = validateNumber(view.read());
+        view.write("Enter developer new email");
+        String email = validate(view.read());
+        view.write("Enter developer sex(male, female)");
+        String sex = validate(view.read());
+        view.write("Enter developer hire date (format YYYY-MM-DD)");
+        Date hireDate = validateDate(view.read());
+        view.write("Enter developer new company id");
+        int companyId = validateNumber(view.read());
+        view.write("Enter developer new salary");
+        int salary = validateNumber(view.read());
+        Developer developer = new Developer();
+        developer.setId(id);
+        developer.setFirstName(firstName);
+        developer.setLastName(lastName);
+        developer.setAge(age);
+        developer.setEmail(email);
+        developer.setSex(sex);
+        developer.setHireDate(hireDate);
+        developer.setCompanyId(companyId);
+        developer.setSalary(salary);
+        view.write("Updating developer...");
+        developerDAO.update(developer);
+    }
+
+    public Developer getById(){
+        view.write("Enter id developer to search");
+        int id = validateNumber(view.read());
+        view.write("Searching for developer...");
+        return developerDAO.getById(id);
+    }
+
+    public List<Developer> getAll(){
+        view.write("Retrieving developers...");
+        return developerDAO.getAll();
+    }
+
+    public void delete(){
+        view.write("Enter id developer to delete");
+        int id = validateNumber(view.read());
+        view.write("Deleting developer...");
+        developerDAO.delete(id);
+    }
+
+    public void showJavaDevelopers() {
+        view.write("Java developers:");
+        List<Developer> developers = developerDAOExtended.getJavaDeveloper();
+        for (Developer d: developers) {
+            view.write(d.toString());
+        }
     }
 
     public void showMiddleDevelopers() {

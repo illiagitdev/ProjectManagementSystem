@@ -9,5 +9,7 @@ public class Main {
         View view = new Console();
         MainController controller = new MainController(view);
         controller.process();
+
+        //todo: skills = create package for this feature too????
     }
 }

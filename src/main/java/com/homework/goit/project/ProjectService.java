@@ -9,22 +9,23 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class ProjectService {
     private View view;
     private DataAccessObject<Project> projectDAO;
-    private ProjectDAOExtended<Project> projectDAOExtended;
+    private ProjectDAOExtended projectDAOExtended;
 
     public ProjectService(View view) {
         this.view = view;
         DatabaseConnector db = new DatabaseConnector();
         projectDAO = new ProjectDAO(db.getConnection());
-        projectDAOExtended = (ProjectDAOExtended<Project>) projectDAO;
+        projectDAOExtended = (ProjectDAOExtended) projectDAO;
     }
 
     public void createProject() {
-        view.write("Enter project first name");
+        view.write("Enter project name");
         String name = validate(view.read());
         view.write("Enter release date (format YYYY-MM-DD)");
         Date releaseDate = validateDate(view.read());
@@ -37,18 +38,60 @@ public class ProjectService {
         project.setReleaseDate(releaseDate);
         project.setCost(cost);
         project.setProjectStart(startDate);
+        view.write("Creating project...");
         projectDAO.create(project);
-        view.write("project created!");
+    }
+
+    public void update(){
+        view.write("Enter project id");
+        int id = validateNumber(view.read());
+        view.write("Enter new project name");
+        String name = validate(view.read());
+        view.write("Enter new release date (format YYYY-MM-DD)");
+        Date releaseDate = validateDate(view.read());
+        view.write("Enter new project cost");
+        int cost = validateNumber(view.read());
+        view.write("Enter new project start date (format YYYY-MM-DD)");
+        Date startDate = validateDate(view.read());
+        Project project = new Project();
+        project.setId(id);
+        project.setName(name);
+        project.setReleaseDate(releaseDate);
+        project.setCost(cost);
+        project.setProjectStart(startDate);
+        view.write("Updating project...");
+        projectDAO.update(project);
+    }
+
+    public Project getById(){
+        view.write("Enter project id");
+        int id = validateNumber(view.read());
+        view.write("Searching project...");
+        return projectDAO.getById(id);
+    }
+
+    public List<Project> getAll(){
+        view.write("Retrieving projects...");
+        return projectDAO.getAll();
+    }
+
+    public void delete(){
+        view.write("Enter project id to delete");
+        int id = validateNumber(view.read());
+        view.write("Deleting project...");
+        projectDAO.delete(id);
     }
 
     public void showSalaryProject() {
         view.write("Enter project id to see total salary");
         int id = validateNumber(view.read());
+        view.write("Project id(" + id + "):");
         Map<String, Integer> projectSalary = projectDAOExtended.getSalaryByProject(id);
         view.write(projectSalary.toString());
     }
 
     public void showProjects() {
+        view.write("Projects:");
         Map<Date, Map<String, Integer>> projects = projectDAOExtended.getProjects();
         Iterator<Map.Entry<Date, Map<String, Integer>>> iter = projects.entrySet().iterator();
         while (iter.hasNext()){

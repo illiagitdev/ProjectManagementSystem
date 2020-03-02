@@ -27,7 +27,12 @@ public class CustomerDAO extends DataAccessObject<Customer> {
             statement.setInt(2, customer.getBudget());
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 
@@ -42,7 +47,12 @@ public class CustomerDAO extends DataAccessObject<Customer> {
                 throw new RuntimeException("No company with id = " + customer.getId());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 
@@ -50,6 +60,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
     public Customer getById(int id) {
         Customer customer = null;
         try (PreparedStatement statement = connection.prepareStatement(RETRIVE_BY_ID)){
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             int length = 0;
             if(rs.last()){
@@ -64,7 +75,12 @@ public class CustomerDAO extends DataAccessObject<Customer> {
             customer.setName(rs.getString(2));
             customer.setBudget(rs.getInt(3));
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return customer;
     }
@@ -83,7 +99,12 @@ public class CustomerDAO extends DataAccessObject<Customer> {
                 companyList.add(customer);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
         return companyList;
     }
@@ -97,7 +118,12 @@ public class CustomerDAO extends DataAccessObject<Customer> {
                 throw new RuntimeException("Customer with id = " + id + " not found!");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e.getNextException();
+            }
         }
     }
 }
