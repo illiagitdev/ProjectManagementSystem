@@ -87,16 +87,20 @@ public class DeveloperService {
         developerDAO.update(developer);
     }
 
-    public Developer getById(){
+    public void getById(){
         view.write("Enter id developer to search");
         int id = validateNumber(view.read());
         view.write("Searching for developer...");
-        return developerDAO.getById(id);
+        Developer developer = developerDAO.getById(id);
+        view.write(developer.toString());
     }
 
-    public List<Developer> getAll(){
+    public void getAll(){
         view.write("Retrieving developers...");
-        return developerDAO.getAll();
+        List<Developer> developers = developerDAO.getAll();
+        for (Developer dev : developers) {
+            view.write(dev.toString());
+        }
     }
 
     public void delete(){

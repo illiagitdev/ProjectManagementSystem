@@ -28,7 +28,7 @@ public class CompanyService {
         companyDAO.create(company);
     }
 
-    public void updateCompany(){
+    public void update(){
         view.write("Enter company id for update");
         int id = validateNumber(view.read());
         view.write("Enter new company name");
@@ -43,16 +43,20 @@ public class CompanyService {
         companyDAO.update(company);
     }
 
-    public Company getById(){
+    public void getById(){
         view.write("Enter company id");
         int id = validateNumber(view.read());
         view.write("Searching company...");
-        return companyDAO.getById(id);
+        Company company = companyDAO.getById(id);
+        view.write(company.toString());
     }
 
-    public List<Company> getAll(){
+    public void getAll(){
         view.write("Retrieving companies...");
-        return companyDAO.getAll();
+        List<Company> companies = companyDAO.getAll();
+        for (Company com: companies) {
+            view.write(com.toString());
+        }
     }
 
     public void delete(){

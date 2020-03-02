@@ -87,7 +87,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
 
     @Override
     public List<Customer> getAll() {
-        List<Customer> companyList = new LinkedList<>();
+        List<Customer> customerList = new LinkedList<>();
         try (PreparedStatement statement = connection.prepareStatement(RETRiVE_ALL)){
             ResultSet rs = statement.executeQuery();
             Customer customer;
@@ -96,7 +96,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
                 customer.setId(rs.getInt(1));
                 customer.setName(rs.getString(2));
                 customer.setBudget(rs.getInt(3));
-                companyList.add(customer);
+                customerList.add(customer);
             }
         } catch (SQLException e) {
             while (e != null) {
@@ -106,7 +106,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
                 e.getNextException();
             }
         }
-        return companyList;
+        return customerList;
     }
 
     @Override

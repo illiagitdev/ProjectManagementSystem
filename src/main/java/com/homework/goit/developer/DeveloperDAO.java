@@ -199,7 +199,7 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
 
     @Override
     public Map<String, Developer> getMiddleDevelopers() {
-        Map<String, Developer> developers = new LinkedHashMap<>();;
+        Map<String, Developer> developers = new HashMap<>();;
         try (PreparedStatement statement = connection.prepareStatement(GET_ALL_MIDDLE_DEVELOPERS)){
             statement.setString(1, "Middle");
             ResultSet rs = statement.executeQuery();
@@ -233,7 +233,7 @@ public class DeveloperDAO extends DataAccessObject<Developer> implements Develop
 
     @Override
     public Map<String, Developer> getDevelopersInProject(int id) {
-        Map<String, Developer> developers = new LinkedHashMap<>();;
+        Map<String, Developer> developers = new HashMap<>();;
         try (PreparedStatement statement = connection.prepareStatement(DEVELOPERS_IN_PROJECT)){
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();

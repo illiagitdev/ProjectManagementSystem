@@ -36,22 +36,27 @@ public class CustomerService {
         view.write("Enter customer new budget");
         int budget = validateNumber(view.read());
         Customer customer = new Customer();
+        customer.setId(id);
         customer.setName(name);
         customer.setBudget(budget);
         view.write("Updating customer...");
         customerDAO.update(customer);
     }
 
-    public Customer getById(){
+    public void getById(){
         view.write("Enter customer id");
         int id = validateNumber(view.read());
         view.write("Searching customer...");
-        return customerDAO.getById(id);
+        Customer customer = customerDAO.getById(id);
+        view.write(customer.toString());
     }
 
-    public List<Customer> getAll(){
+    public void getAll(){
         view.write("Retrieving customer...");
-        return customerDAO.getAll();
+        List<Customer> customers = customerDAO.getAll();
+        for (Customer cs: customers) {
+            view.write(cs.toString());
+        }
     }
 
     public void delete(){

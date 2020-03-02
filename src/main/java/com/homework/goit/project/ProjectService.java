@@ -63,16 +63,20 @@ public class ProjectService {
         projectDAO.update(project);
     }
 
-    public Project getById(){
+    public void getById(){
         view.write("Enter project id");
         int id = validateNumber(view.read());
         view.write("Searching project...");
-        return projectDAO.getById(id);
+        Project project = projectDAO.getById(id);
+        view.write(project.toString());
     }
 
-    public List<Project> getAll(){
+    public void getAll(){
         view.write("Retrieving projects...");
-        return projectDAO.getAll();
+        List<Project> projects = projectDAO.getAll();
+        for (Project pr : projects) {
+            view.write(pr.toString());
+        }
     }
 
     public void delete(){

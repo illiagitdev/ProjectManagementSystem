@@ -1,7 +1,6 @@
 package com.homework.goit.project;
 
 import com.homework.goit.common.DataAccessObject;
-import com.homework.goit.developer.Developer;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -56,6 +55,7 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
             statement.setDate(2, project.getReleaseDate());
             statement.setInt(3, project.getCost());
             statement.setDate(4, project.getProjectStart());
+            statement.setInt(5, project.getId());
             statement.execute();
             int rows = statement.executeUpdate();
             if(rows == 0){
@@ -148,14 +148,15 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
 
     @Override
     public Map<String, Integer> getSalaryByProject(int id) {
-        Map<String, Integer> result = new LinkedHashMap<>();
+        Map<String, Integer> result = new HashMap<>();
         try (PreparedStatement statement = connection.prepareStatement(PROJECT_BY_SALARY)){
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            rs.next();
-            String key = rs.getString(1);
-            int value = rs.getInt(2);
-            result.put(key, value);
+            while (rs.next()) {
+                String key = rs.getString(1);
+                int value = rs.getInt(2);
+                result.put(key, value);
+            }
         } catch (SQLException e) {
             while (e != null) {
                 System.out.println("SQLState: " + e.getSQLState());
@@ -169,7 +170,7 @@ public class ProjectDAO extends DataAccessObject<Project> implements ProjectDAOE
 
     @Override
     public Map<Date, Map<String, Integer>> getProjects() {
-        Map<Date, Map<String, Integer>> result1 = new LinkedHashMap<>();
+        Map<Date, Map<String, Integer>> result1 = new HashMap<>();
         Map<String, Integer> result2;
         try (PreparedStatement statement = connection.prepareStatement(GET_PROJECTS)){
             ResultSet rs = statement.executeQuery();
