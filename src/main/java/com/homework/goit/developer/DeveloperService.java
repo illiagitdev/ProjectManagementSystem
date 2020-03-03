@@ -29,7 +29,7 @@ public class DeveloperService {
         String firstName = validate(view.read());
         view.write("Enter developer last name");
         String lastName = validate(view.read());
-        view.write("Enter developer age");
+        view.write("Enter developer age (>0)");
         int age = validateNumber(view.read());
         view.write("Enter developer email");
         String email = validate(view.read());
@@ -61,7 +61,7 @@ public class DeveloperService {
         String firstName = validate(view.read());
         view.write("Enter developer new last name");
         String lastName = validate(view.read());
-        view.write("Enter developer new age");
+        view.write("Enter developer new age(>0)");
         int age = validateNumber(view.read());
         view.write("Enter developer new email");
         String email = validate(view.read());
@@ -151,7 +151,7 @@ public class DeveloperService {
         }
     }
 
-    private Date validateDate(String read) {
+    private Date validateDate(String read) {//todo: does not work
         Date date = null;
         try {
             LocalDate hireDate = LocalDate.parse(read, DateTimeFormatter.ofPattern("YYYY-MM-DD"));
@@ -159,7 +159,6 @@ public class DeveloperService {
         } catch (DateTimeParseException e) {
             view.write("Wrong date format!");
         }
-        //todo: how to loop if exception?
         return date;
     }
 

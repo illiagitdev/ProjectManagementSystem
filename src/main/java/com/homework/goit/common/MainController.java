@@ -22,9 +22,8 @@ public class MainController {
                     break;
                 }
                 case "add_developer":{
-//                    view.write("Add developer!");
-//                    createDeveloper();
-                    view.write("Temporarily unavailable");
+                    view.write("Add developer!");
+                    createDeveloper();
                     break;
                 }
                 case "add_project":{
@@ -44,9 +43,8 @@ public class MainController {
                 }
 
                 case "update_developer":{
-//                    view.write("Update developer!");
-//                    updateDeveloper();
-                    view.write("Temporarily unavailable");
+                    view.write("Update developer!");
+                    updateDeveloper();
                     break;
                 }
                 case "update_project":{
@@ -87,9 +85,8 @@ public class MainController {
                 }
 
                 case "get_all_developer":{
-//                    view.write("Get all developer!");
-//                    getAllDeveloper();
-                    view.write("Temporarily unavailable");
+                    view.write("Get all developer!");
+                    getAllDeveloper();
                     break;
                 }
                 case "get_all_project":{
