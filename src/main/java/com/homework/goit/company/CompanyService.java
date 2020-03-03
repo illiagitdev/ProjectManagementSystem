@@ -80,14 +80,12 @@ public class CompanyService {
 
     private int validateNumber(String value) {
         int result = 0;
-        while  (value.trim().isEmpty()){
-            view.write("Field can't be empty");
-            value = view.read();
-        }
-        try {
-            result = Integer.parseInt(value);
-        } catch (NumberFormatException e){
-            view.write("Not a number! Try again.");
+        if  (!value.trim().isEmpty()) {
+            try {
+                result = Integer.parseInt(value);
+            } catch (NumberFormatException e) {
+                view.write("Not a number!");
+            }
         }
         return result;
     }
