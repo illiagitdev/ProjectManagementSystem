@@ -74,7 +74,11 @@ public class Developer extends Entity {
     }
 
     public void setCompanyId(int companyId) {
-        this.companyId = companyId;
+        if (companyId < 0 ){
+            this.companyId = 0;
+        } else {
+            this.companyId = companyId;
+        }
     }
 
     public int getSalary() {
@@ -82,7 +86,12 @@ public class Developer extends Entity {
     }
 
     public void setSalary(int salary) {
-        this.salary = salary;
+        if (salary < 0){
+            this.salary = 0;
+        }
+        else {
+            this.salary = salary;
+        }
     }
 
     @Override
