@@ -2,7 +2,8 @@ package com.homework.goit.developer;
 
 public enum Sex {
     MALE("male"),
-    FEMALE("female");
+    FEMALE("female"),
+    OTHER("other");
 
     private String sex;
 
