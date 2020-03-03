@@ -32,7 +32,7 @@ public class ProjectService {
         view.write("Enter project cost");
         int cost = validateNumber(view.read());
         view.write("Enter project start date (format YYYY-MM-DD)");
-        Date startDate = validateDate(view.read());//todo: doesn't work properly
+        Date startDate = validateDate(view.read());
         Project project = new Project();
         project.setName(name);
         project.setReleaseDate(releaseDate);
@@ -98,7 +98,7 @@ public class ProjectService {
         }
     }
 
-    public void showSalaryProject() {//todo: add check for ID, if it <0 & if id > size
+    public void showSalaryProject() {
         view.write("Enter project id to see total salary");
         int id = validateNumber(view.read());
         view.write("Project id(" + id + "):");
@@ -118,14 +118,13 @@ public class ProjectService {
     }
 
     private Date validateDate(String read) {
-        Date date = null;
+        Date date = new Date(System.currentTimeMillis());
         try {
-            LocalDate hireDate = LocalDate.parse(read, DateTimeFormatter.ofPattern("YYYY-MM-DD"));
-            date = Date.valueOf(hireDate);
-        } catch (DateTimeParseException e) {
+            date = Date.valueOf(read);
+        } catch (IllegalArgumentException e){
             view.write("Wrong date format!");
+            System.out.println("Message: " + e.getMessage());
         }
-        //todo: how to loop if exception?
         return date;
     }
 

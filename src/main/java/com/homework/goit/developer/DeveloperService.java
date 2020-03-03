@@ -140,7 +140,7 @@ public class DeveloperService {
         }
     }
 
-    public void showProjectDevelopers() {//todo: if -n, 0 or >size it exit without message
+    public void showProjectDevelopers() {
         view.write("Enter project id to see it's developers");
         int id =validateNumber(view.read());
         Map<String, Developer> projectDevelopers = developerDAOExtended.getDevelopersInProject(id);
@@ -151,13 +151,13 @@ public class DeveloperService {
         }
     }
 
-    private Date validateDate(String read) {//todo: does not work
-        Date date = null;
+    private Date validateDate(String read) {
+        Date date = new Date(System.currentTimeMillis());
         try {
-            LocalDate hireDate = LocalDate.parse(read, DateTimeFormatter.ofPattern("YYYY-MM-DD"));
-            date = Date.valueOf(hireDate);
-        } catch (DateTimeParseException e) {
+            date = Date.valueOf(read);
+        } catch (IllegalArgumentException e){
             view.write("Wrong date format!");
+            System.out.println("Message: " + e.getMessage());
         }
         return date;
     }
