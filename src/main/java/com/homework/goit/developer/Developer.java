@@ -57,7 +57,7 @@ public class Developer extends Entity {
         }else if (sex.equals(Sex.FEMALE.getSex())){
             this.sex =  Sex.FEMALE;
         } else {
-            this.sex = null;
+            this.sex = Sex.OTHER;
         }
     }
 
@@ -94,7 +94,7 @@ public class Developer extends Entity {
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", sex='" + sex.getSex() + '\'' +
-                ", hireDate='" + hireDate.toString() + '\'' +
+                ", hireDate='" + hireDate + '\'' +
                 ", companyId=" + companyId +
                 ", salary=" + salary +
                 '}';
